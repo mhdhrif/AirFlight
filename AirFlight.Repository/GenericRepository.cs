@@ -33,14 +33,14 @@ namespace AirFlight.Repository
             throw new NotImplementedException();
         }
 
-        public IList<T> FindBy(Expression<Func<T, bool>> predicate)
+        public IList<T> FindBy(Func<T, bool> predicate)
         {
-            throw new NotImplementedException();
+            return JsonContext.FindBy<T>(predicate);
         }
 
         public T FindById(int id)
         {
-            throw new NotImplementedException();
+            return JsonContext.Find<T>(id);
         }
 
         public IList<T> GetAll()
