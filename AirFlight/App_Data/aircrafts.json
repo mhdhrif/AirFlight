@@ -1,0 +1,14 @@
+[
+  {
+    "Id": 1,
+    "FuelConsumptionPerHour": 830.5,
+    "TakeOffEffort": 800.0,
+    "GroundSpeed": 1200.0
+  },
+  {
+    "Id": 2,
+    "FuelConsumptionPerHour": 984.65,
+    "TakeOffEffort": 754.0,
+    "GroundSpeed": 1350.0
+  }
+]
