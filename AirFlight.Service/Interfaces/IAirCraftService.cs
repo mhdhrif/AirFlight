@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace AirFlight.Service.Interfaces
 {
-    public interface IAirCraftService : IDisposable
+    public interface IAircraftService : IDisposable
     {
-        IList<Aircraft> GetAllAirCrafts();
+        IList<Aircraft> GetAllAircrafts();
+        void AddAircraft(Aircraft aircraft);
+        void DeleteAircraft(Aircraft aircraft);
+        void EditAircraft(Aircraft aircraft);
+        Aircraft GetAircraft(int aircraftId);
     }
 }

@@ -1,0 +1,72 @@
+﻿@using AirFlight.ViewModels
+@model FlightsSummaryViewModel
+
+@{
+    ViewBag.Title = "FlightsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My flights</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Index")
+</p>
+<table class="table">
+    <tr>
+        <th>Departure airport</th>
+        <th>Destination airport</th>
+        <th>Aircraft</th>
+        <th>Distance (km)</th>
+        <th>Needed fuel (kg)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Flights)
+    {
+        <tr>
+            <td>
+                @item.DepartureAirport.Name
+            </td>
+            <td>
+                @item.DestinationAirport.Name
+            </td>
+            <td>
+                @item.Aircraft.Model
+            </td>
+            <td>
+                @item.Distance.ToString(".##")
+            </td>
+            <td>
+                @item.NeededFuel.ToString(".##")
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditFlight", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteFlight", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+<h2>Airports Infos</h2>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Longitude</th>
+        <th>Latitude</th>
+    </tr>
+
+    @foreach (var item in Model.Airports)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Longitude
+            </td>
+            <td>
+                @item.Latitude
+            </td>
+        </tr>
+    }
+</table>

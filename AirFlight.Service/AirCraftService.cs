@@ -9,23 +9,46 @@ using System.Threading.Tasks;
 
 namespace AirFlight.Service
 {
-    public class AirCraftService : IAirCraftService
+    public class AircraftService : IAircraftService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AirCraftService(IUnitOfWork unitOfWork)
+        public AircraftService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public void AddAircraft(Aircraft aircraft)
+        {
+            _unitOfWork.AircraftsRepository.Add(aircraft);
+            _unitOfWork.Save();
+        }
+
+        public void DeleteAircraft(Aircraft aircraft)
+        {
+            _unitOfWork.AircraftsRepository.Delete(aircraft);
+            _unitOfWork.Save();
+        }
+
+        public void EditAircraft(Aircraft aircraft)
+        {
+            _unitOfWork.AircraftsRepository.Edit(aircraft);
+            _unitOfWork.Save();
+        }
+
+        public Aircraft GetAircraft(int aircraftId)
+        {
+            return _unitOfWork.AircraftsRepository.FindById(aircraftId);
+        }
+
+        public IList<Aircraft> GetAllAircrafts()
+        {
+            return _unitOfWork.AircraftsRepository.GetAll();
         }
 
         public void Dispose()
         {
             _unitOfWork.Dispose();
-        }
-
-        public IList<Aircraft> GetAllAirCrafts()
-        {
-            return _unitOfWork.AirCraftRepository.GetAll();
         }
     }
 }

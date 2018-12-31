@@ -14,14 +14,20 @@ namespace AirFlight.Repository
     {
         private readonly AirFlightJsonContext _context;
 
-        public UnitOfWork(/*AirFlightJsonContext context*/string storeLocation)
+        public UnitOfWork()
         {
-            _context = new AirFlightJsonContext(storeLocation);
-            AirCraftRepository = new GenericRepository<Aircraft>(_context);
+            _context = new AirFlightJsonContext();
+            AircraftsRepository = new GenericRepository<Aircraft>(_context);
+            AirportsRepository = new GenericRepository<Airport>(_context);
+            FlightsRepository = new GenericRepository<Flight>(_context);
         }
 
-        public IGenericRepository<Aircraft> AirCraftRepository { get; private set; }
-        
+        public IGenericRepository<Aircraft> AircraftsRepository { get; private set; }
+
+        public IGenericRepository<Airport> AirportsRepository { get; private set; }
+
+        public IGenericRepository<Flight> FlightsRepository { get; private set; }
+
         public void Dispose()
         {
             _context.Dispose();

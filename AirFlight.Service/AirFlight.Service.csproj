@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Geocoding, Version=3.6.0.0, Culture=neutral, PublicKeyToken=7c714700b88674c7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geocoding.net.3.6.0\lib\net40\Geocoding.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirCraftService.cs" />
-    <Compile Include="Interfaces\IAirCraftService.cs" />
+    <Compile Include="AircraftService.cs" />
+    <Compile Include="AirportService.cs" />
+    <Compile Include="FlightService.cs" />
+    <Compile Include="Interfaces\IAircraftService.cs" />
+    <Compile Include="Interfaces\IAirportService.cs" />
+    <Compile Include="Interfaces\IFlightService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +61,10 @@
       <Project>{C6C5F94B-15DE-4E3A-9182-41F1D904C2EB}</Project>
       <Name>AirFlight.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

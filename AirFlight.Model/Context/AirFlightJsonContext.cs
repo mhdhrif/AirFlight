@@ -11,55 +11,31 @@ namespace AirFlight.Model.Context
 {
     public class AirFlightJsonContext
     {
+        private readonly string _storeLocation = AppDomain.CurrentDomain.GetData("DataDirectory").ToString();
+
         public IList<Flight> Flights { get; set; }
         public IList<Aircraft> Aircrafts { get; set; }
         public IList<Airport> Airports { get; set; }
 
-        public AirFlightJsonContext(string storeLocation)
+        public AirFlightJsonContext()
         {
-            Flights = JsonConvert.DeserializeObject<List<Flight>>(File.ReadAllText($@"{storeLocation}\flights.json"));
-            Aircrafts = JsonConvert.DeserializeObject<List<Aircraft>>(File.ReadAllText($@"{storeLocation}\aircrafts.json"));
-            Airports = JsonConvert.DeserializeObject<List<Airport>>(File.ReadAllText($@"{storeLocation}\airports.json"));
+            Flights = JsonConvert.DeserializeObject<List<Flight>>(File.ReadAllText($@"{_storeLocation}\flights.json"));
+            Aircrafts = JsonConvert.DeserializeObject<List<Aircraft>>(File.ReadAllText($@"{_storeLocation}\aircrafts.json"));
+            Airports = JsonConvert.DeserializeObject<List<Airport>>(File.ReadAllText($@"{_storeLocation}\airports.json"));
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            File.WriteAllText($@"{_storeLocation}\flights.json", JsonConvert.SerializeObject(Flights));
+            File.WriteAllText($@"{_storeLocation}\aircrafts.json", JsonConvert.SerializeObject(Aircrafts));
+            File.WriteAllText($@"{_storeLocation}\airports.json", JsonConvert.SerializeObject(Airports));
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
-        }
-
-        public IList<T> FindBy<T>(Func<T, bool> predicate)
-        {
-            switch (typeof(T).Name)
-            {
-                case "Flight":
-                    return ((IList<T>)Flights).Where(predicate).ToList();
-                case "Aircraft":
-                    return ((IList<T>)Aircrafts).Where(predicate).ToList();
-                case "Airport":
-                    return ((IList<T>)Airports).Where(predicate).ToList();
-                default:
-                    return null;
-            }
-        }
-
-        public T Find<T>(int id)
-        {
-            switch (typeof(T).Name)
-            {
-                case "Flight":
-                    return (T) Convert.ChangeType(Flights.FirstOrDefault(f => f.Id == id), typeof(T));
-                case "Aircraft":
-                    return (T)Convert.ChangeType(Aircrafts.FirstOrDefault(f => f.Id == id), typeof(T));
-                case "Airport":
-                    return (T)Convert.ChangeType(Airports.FirstOrDefault(f => f.Id == id), typeof(T));
-                default:
-                    return default(T);
-            }
+            Flights.Clear();
+            Aircrafts.Clear();
+            Airports.Clear();
         }
 
         public IList<T> GetListByType<T>()

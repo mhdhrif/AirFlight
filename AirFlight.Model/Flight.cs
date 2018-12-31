@@ -10,7 +10,7 @@ namespace AirFlight.Model
     {
         public int Id { get; set; }
         public Airport DepartureAirport { get; set; }
-        public Airport ArrivalAirport { get; set; }
+        public Airport DestinationAirport { get; set; }
         public Aircraft Aircraft { get; set; }
         public double Distance { get; set; }
         public double NeededFuel { get; set; }

@@ -3,9 +3,6 @@ using AirFlight.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirFlight.Repository
 {
@@ -20,27 +17,34 @@ namespace AirFlight.Repository
 
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            var id = JsonContext.GetListByType<T>().Count() > 0
+                        ? (int) JsonContext.GetListByType<T>().Max(x => x.GetType().GetProperty("Id").GetValue(x)) + 1
+                        : 1;
+            entity.GetType().GetProperty("Id").SetValue(entity, id);
+            JsonContext.GetListByType<T>().Add(entity);
         }
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            JsonContext.GetListByType<T>().Remove(entity);
         }
 
         public void Edit(T entity)
         {
-            throw new NotImplementedException();
+            var itemId = (int)entity.GetType().GetProperty("Id").GetValue(entity);
+            var itemToEdit = FindById(itemId);
+            Delete(itemToEdit);
+            Add(entity);
         }
 
         public IList<T> FindBy(Func<T, bool> predicate)
         {
-            return JsonContext.FindBy<T>(predicate);
+            return JsonContext.GetListByType<T>().Where(predicate).ToList();
         }
 
         public T FindById(int id)
         {
-            return JsonContext.Find<T>(id);
+            return JsonContext.GetListByType<T>().FirstOrDefault(x => (int)x.GetType().GetProperty("Id").GetValue(x) == id);
         }
 
         public IList<T> GetAll()

@@ -9,7 +9,9 @@ namespace AirFlight.Repository.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<Aircraft> AirCraftRepository { get; }
+        IGenericRepository<Aircraft> AircraftsRepository { get; }
+        IGenericRepository<Airport> AirportsRepository { get; }
+        IGenericRepository<Flight> FlightsRepository { get; }
         void Save();
     }
 }

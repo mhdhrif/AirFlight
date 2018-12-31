@@ -1,31 +1,61 @@
-﻿@{
+﻿@using AirFlight.ViewModels
+@model FlightViewModel
+@{
     ViewBag.Title = "Home Page";
 }
+@Scripts.Render("~/bundles/flights")
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+    @Html.ValidationSummary("", new { @class = "" })
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    <h1>Add a new Flight</h1>
+    @using (Html.BeginForm("AddFlight", "Home", FormMethod.Post, new { @class = "needs-validation", @novalidate = "" }))
+    {
+        @Html.HiddenFor(m => m.DepartureAirportName)
+        <input type="hidden" value="@Model.DepartureAirportGeoPoint" id="DepAirportGeoPoint" />
+        @Html.HiddenFor(m => m.DestinationAirportName)
+        <input type="hidden" value="@Model.DestinationAirportGeoPoint" id="DestAirportGeoPoint" />
+        @Html.HiddenFor(m => m.FlightId)
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="departureAirport">Departure Airport</label>
+                <br />
+                <select name="DepartureAirportGeoPoint" id="departureairport"
+                        class="custom-select d-block w-100 form-control" required></select>
+                <div class="invalid-feedback">
+                    Valid airport is required.
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="destinationAirport">Destination Airport</label>
+                <br />
+                <select name="DestinationAirportGeoPoint" id="destinationairport"
+                        class="custom-select d-block w-100 form-control" required></select>
+                <div class="invalid-feedback">
+                    Valid airport is required.
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="aircraft">Aircraft</label>
+                @Html.DropDownListFor(x => Model.SelectedAircraftId,
+                        new SelectList(Model.Aircrafts, "Value", "Text"), "--- select an aircraft ---",
+                        htmlAttributes: new { @class = "custom-select d-block w-100", @id = "aircraft", @required = "" })
+                <div class="invalid-feedback">
+                    Please select an Aircraft.
+                </div>
+            </div>
+        </div>
+        <hr class="mb-4" />
+
+        if (Model.FlightId == 0)
+        {
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Add Flight</button>
+        }
+        else
+        {
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Edit Flight</button>
+        }
+    }
 </div>

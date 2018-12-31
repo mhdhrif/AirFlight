@@ -9,6 +9,7 @@ namespace AirFlight.Model
     public class Aircraft
     {
         public int Id { get; set; }
+        public string Model { get; set; }
         public double FuelConsumptionPerHour { get; set; }
         public double TakeOffEffort { get; set; }
         public double GroundSpeed { get; set; }
